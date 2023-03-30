@@ -3,10 +3,11 @@ import s from './../Dialogs.module.css'
 import {useNavigate} from 'react-router-dom';
 
 type DialogItemPropsType = {
-
+    name: string
+    id: number
 }
 
-const DialogItem = () => {
+const DialogItem = (props: DialogItemPropsType) => {
     const navigate = useNavigate();
     return <div
         onClick={() => {

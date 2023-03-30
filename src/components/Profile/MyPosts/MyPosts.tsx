@@ -1,36 +1,37 @@
-import React from 'react';
+import React, {ChangeEvent, useRef} from 'react';
 import s from './MyPosts.module.css';
+import {PostType} from "../../../../src - Copy/components/redux/State";
 
 type MyPostsProps = {
-
+    posts: PostType[]
+    updateText: string
+    addPost: (s: string) => void
 }
 
-const MyPosts = () => {
+const MyPosts = (props: MyPostsProps) => {
 
-    let newTextElement;                // надо получить текущее значение в textarea
-
-
-
-    let postsElements;              // надо отрисовать посты
+    let newTextElement=useRef(null);                // надо получить текущее значение в textarea
 
 
 
+    let postsElements=props.posts.map(el=><li>{el.message}{el.likesCount}</li>);              // надо отрисовать посты
 
 
-    const addPost = () => {
 
-                            // добавляем новый пост
 
+
+    const addPostHandler = () => {
+      props.addPost(newTextElement.current!)                      // добавляем новый пост
     }
 
     return <div className={s.postsBlock}>
         <h3>My Posts</h3>
         <div>
             <div>
-                <textarea ref={newTextElement} onChange={()=>{}} ></textarea>
+                <textarea ref={newTextElement}></textarea>
             </div>
             <div>
-                <button onClick={addPost}>Add post</button>
+                <button onClick={addPostHandler}>Add post</button>
             </div>
         </div>
         <div className={s.posts}>

@@ -6,11 +6,11 @@ export type StateType = {
     messagesPage: MessagesPageType
 }
 
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: PostType[]
     updateText: string
 }
-type MessagesPageType ={
+export type MessagesPageType ={
     dialogsData: DialogDataType[]
     messagesData: MessageDataType[]
 }
