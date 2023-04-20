@@ -1,50 +1,57 @@
-import React from 'react';
-import s from './Dialogs.module.css'
-import {useNavigate} from 'react-router-dom';
-import DialogItem from './DialogItem/DialogItem';
-import Message from './Message/Message';
-import {MessagesPageType} from "../redux/State";
+import React, {ChangeEvent} from "react";
+import styles from './Dialogs.module.css'
+import {DialogItem} from "./DialogItem";
+import {Message} from "./Message";
+import {ActionsTypes, DialogsDataType, sendMessageAC, updateNewMessageBodyAC} from "../../redux/State";
 
 
-type DialogsPropsType={
-    messagesPage: MessagesPageType
-
+type DialogsPropsType = {
+    dialogsData: Array<DialogsDataType>
+    messagesData: Array<MessagesDataType>
+    newMessageBody: string
+    dispatch: (action: ActionsTypes) => void
 }
-
-
-
-
+type MessagesDataType = {
+    id: number,
+    text: string
+}
 export const Dialogs = (props: DialogsPropsType) => {
 
-    const {dialogsData, messagesData} = props.messagesPage
+    let dialogElements = props.dialogsData.map(el => <DialogItem key={el.id} name={el.name} id={el.id}/>)
 
-    const navigate = useNavigate();
+    // let messagesData: Array<MessagesDataType> = [
+    //     {id: 1, text: "Hi"},
+    //     {id: 2, text: "Hello"},
+    //     {id: 3, text: "How are you?"},
+    //     {id: 4, text: "Yo"},
+    // ]
+    let messagesElement = props.messagesData.map(el => <Message key={el.id} text={el.text} id={el.id}/>)
+    let newMessageBody = props.newMessageBody
+    const onSendMessageClick = () => {
+        props.dispatch(sendMessageAC())
+    }
+    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let body = e.target.value
+        props.dispatch(updateNewMessageBodyAC(body))
+    }
+
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
-                {
-                  dialogsData.map((dialog) =>{
-                      return(
-                          <DialogItem name={dialog.name} id={dialog.id}/>
-                      )
-                  })
-                }
-
-
+        <div className={styles.dialogs}>
+            <div className={styles.dialogsItem}>
+                {dialogElements}
             </div>
 
-            <div className={s.messages}>
-                {
-                    messagesData.map((message) =>{
-                        return(
-                            <Message message={message.message} id={message.id}/>
-                        )
-                    })
-                }
-
+            <div className={styles.messages}>
+                <div>{messagesElement}</div>
+                <div>
+                    <div><textarea value={newMessageBody}
+                                   onChange={onNewMessageChange}
+                                   placeholder={'Enter your message'}/></div>
+                    <div>
+                        <button onClick={onSendMessageClick}>send</button>
+                    </div>
+                </div>
             </div>
         </div>
     )
 }
-
-export default Dialogs;
