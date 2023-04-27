@@ -18,7 +18,6 @@ import {
 } from "./redux/State";
 import {dialogsReducer} from "./redux/DialogsReducer";
 import {profileReducer} from "./redux/ProfileReducer";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 export type AppPropsType = {
     store: any
@@ -40,7 +39,12 @@ function App(props: AppPropsType) {
                     <div className={'content'}>
                         <Route
                             path={"/dialogs"}
-                            render={() => <DialogsContainer/>}/>
+                            render={() => <Dialogs
+                                dialogsData={state.dialogsReducer.dialogsData}
+                                messagesData={state.dialogsReducer.messagesData}
+                                newMessageBody={state.dialogsReducer.newMessageBody}
+                                dispatch={props.dispatch}
+                            />}/>
                         <Route path={"/profile"}
                                render={() => <Profile
                                    newPostText={state.profileReducer.newPostText}

@@ -6,16 +6,10 @@ import {ActionsTypes, DialogsDataType, sendMessageAC, updateNewMessageBodyAC} fr
 
 
 type DialogsPropsType = {
-    dialogsData: DialogsDataType[]
-    messagesData: MessagesDataType[]
-    onSendMessageClick: ()=>void
-    onNewMessageChange: (newText:string)=>void
-
+    dialogsData: Array<DialogsDataType>
+    messagesData: Array<MessagesDataType>
     newMessageBody: string
-    // dialogsData: Array<DialogsDataType>
-    // messagesData: Array<MessagesDataType>
-    // newMessageBody: string
-    // dispatch: (action: ActionsTypes) => void
+    dispatch: (action: ActionsTypes) => void
 }
 type MessagesDataType = {
     id: number,
@@ -34,11 +28,11 @@ export const Dialogs = (props: DialogsPropsType) => {
     let messagesElement = props.messagesData.map(el => <Message key={el.id} text={el.text} id={el.id}/>)
     let newMessageBody = props.newMessageBody
     const onSendMessageClick = () => {
-        props.onSendMessageClick()
+        props.dispatch(sendMessageAC())
     }
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value
-        props.onNewMessageChange(body)
+        props.dispatch(updateNewMessageBodyAC(body))
     }
 
     return (

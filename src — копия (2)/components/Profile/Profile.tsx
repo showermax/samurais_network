@@ -15,12 +15,11 @@ export const Profile = (props: ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostContainer/>
-            {/*<MyPosts profilePage={props.profilePage}*/}
-            {/*         dispatch={props.dispatch}*/}
-            {/*         newPostText={props.newPostText}*/}
+            <MyPosts profilePage={props.profilePage}
+                     dispatch={props.dispatch}
+                     newPostText={props.newPostText}
 
-
+            />
         </div>
     )
 };
